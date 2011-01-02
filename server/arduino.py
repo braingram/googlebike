@@ -15,7 +15,7 @@ class Arduino(threading.Thread):
     def __init__(self, hz=100):
         threading.Thread.__init__(self)
         self.cond = threading.Condition() # store condition for accessing shared data
-        self.packet = (512,512,0,0)
+        self.packet = (512,512,1,0)
         self.readBuffer = ""
         self.ser = None
         self.keepAlive = True

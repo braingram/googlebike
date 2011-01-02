@@ -13,8 +13,10 @@ PORT = 8080
 
 global ard
 ard = Arduino()
-ard.configure_serial('/dev/tty.usbserial-A4001Lf4')
-#ard.configure_serial()
+try:
+    ard.configure_serial('/dev/tty.usbserial-A4001Lf4')
+except:
+    print "Serial port configuration failed, moving ahead"
 ard.start()
 
 class TestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -30,7 +32,7 @@ class TestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
             #result = int(data_string) ** 2
             packet = ard.get_packet()
         except:
-            packet = (512,512,0,0)
+            packet = (512,512,1,0)
         result = "%i,%i,%i,%i" % (packet)
         # result = "0,0"
         self.wfile.write(result)
